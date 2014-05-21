@@ -10,7 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "boxer/ubuntu-14.04-jvm"
+  config.vm.box = "misheska/ubuntu1404"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
@@ -116,12 +116,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #
   #   chef.validation_client_name = "ORGNAME-validator"
 
-  ## For masterless, mount your salt file root
-  config.vm.synced_folder "srv/salt/", "/srv/salt/"
+  ## For masterless, mount your salt file roots and pillars
+  config.vm.synced_folder "salt/roots", "/srv/salt/"
+  #config.vm.synced_folder "salt/pillars", "/srv/pillar/"
   
   ## Use all the defaults:
   config.vm.provision :salt do |salt|
     
+    salt.minion_config = "salt/minion"
     salt.run_highstate = true
     
   end
