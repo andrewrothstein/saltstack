@@ -119,12 +119,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # chef-validator, unless you changed the configuration.
   #
   #   chef.validation_client_name = "ORGNAME-validator"
-  ## For masterless, mount your salt file root
-  config.vm.synced_folder "srv/salt/", "/srv/salt/"
+
+  ## For masterless, mount your salt file roots and pillars
+  config.vm.synced_folder "salt/roots", "/srv/salt/"
+  #config.vm.synced_folder "salt/pillars", "/srv/pillar/"
   
  ## Use all the defaults:
   config.vm.provision :salt do |salt|
-   
+    
+    salt.minion_config = "salt/minion"
     salt.run_highstate = true
    
   end
